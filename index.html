@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sample socket.io chat app</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.0/socket.io.js"></script>
 </head>
 <body>
-    
+    <input type="text" id="msg">
+    <button>Send</button>
+    <ul></ul>
 </body>
 </html>
+
+<script>
+    var socket = io.connect("http://localhost:8888");
+
+    $("button").click(function () {
+        var text = $("#msg").val();
+        //circle'ın 1. adımı (Bkz:server.js 13. satır)
+        socket.emit("servermessage", text);
+    });
+
+    //circle'ın 4. adımı (Bkz:server.js 13. satır)
+    socket.on("clientmessage", function (message) {
+        $("ul").append("<li>"+message+"</li>");
+    })
+</script>
