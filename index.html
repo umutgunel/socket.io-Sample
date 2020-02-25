@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample socket.io chat app</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.0/socket.io.js"></script>
 </head>
+
 <body>
-    <input type="text" id="msg">
-    <button>Send</button>
-    <ul></ul>
+    <div class="container" style="margin-top: 3%;">
+        <h3>Sample socket.io chat page</h3><br>
+        <div class="row">
+            <div class="col md-6">
+                <div style="margin-bottom:3%;">
+                    <input type="text" id="msg" style="vertical-align: middle; height: 40px;">
+                    <button class="btn btn-primary" style="height: 40px;">Send Message</button>
+                    <button type="button" class="btn btn-primary" style="height: 40px;">Message Count
+                        <span id="count" style="color: red;" class="badge badge-light">0</span>
+                    </button>
+                </div>
+                <div>
+                    <ul style="padding-inline-start: 0px;"></ul>
+                </div>
+            </div>
+            <div class="col md-6">
+                <div>
+                    <img src="https://bit.ly/2SXC6I1" class="img-thumbnail" alt="flow" width="600" height="600">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 </body>
+
 </html>
 
 <script>
     var socket = io.connect("http://localhost:8888");
 
+    var count = 0;
+
     $("button").click(function () {
-        var text = $("#msg").val();
-        //circle'ın 1. adımı (Bkz:server.js 13. satır)
-        socket.emit("servermessage", text);
+
+        if ($("#msg").val() == "") {
+            alert("Please write a message!")
+        }
+        else {
+            var text = $("#msg").val();
+            count++;
+            $("#count").text(count)
+
+            //html'den gelen verinin server'a iletilmesi (yayımlama)
+            socket.emit("servermessage", text);
+        }
+
     });
 
-    //circle'ın 4. adımı (Bkz:server.js 13. satır)
+    //server'dan gelen verinin html'e iletilmesi (dinleme)
     socket.on("clientmessage", function (message) {
-        $("ul").append("<li>"+message+"</li>");
+        $("ul").append("<div class='alert alert-success' role=`alert`>" + message + "</div>");
     })
+
+
 </script>
