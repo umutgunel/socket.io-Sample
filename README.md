@@ -25,3 +25,12 @@ io.on('connection', function (socket) {
 })
 
 http.listen(8888);
+
+
+Yüklenen paketler
+------------------------------------------------------------
+- Express
+- socket.io
+- http
+- JQuery
+- Bootstrap
