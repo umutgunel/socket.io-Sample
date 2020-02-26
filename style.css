@@ -1,0 +1,25 @@
+.container{
+    margin-top: 3%;
+}
+
+#msg{
+    vertical-align: middle;
+    height: 40px;
+}
+
+#send, #countButton{
+    height: 40px;
+}
+
+#count{
+    color: red;
+}
+
+#controls{
+    margin-bottom: 3%;
+}
+
+.img{
+    width: 600;
+    height: 600;
+}
