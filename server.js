@@ -21,5 +21,4 @@ io.on('connection', function (socket) {
         io.emit("clientmessage", data);
     });
 })
-
 http.listen(8888);
